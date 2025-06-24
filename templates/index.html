@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>WebScanLite</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+</head>
+<body class="p-4">
+  <h1>🌐 WebScanLite</h1>
+  <form method="POST">
+    <input class="form-control" name="url" placeholder="Enter website URL (e.g. https://example.com)" required>
+    <button class="btn btn-primary mt-2">Scan</button>
+  </form>
+
+  {% if data %}
+    {% if data.error %}
+      <div class="alert alert-danger mt-3">{{ data.error }}</div>
+    {% else %}
+      <h4 class="mt-4">Scan Results for {{ data.domain }}</h4>
+      <ul class="list-group">
+        <li class="list-group-item">IP: {{ data.ip }}</li>
+        <li class="list-group-item">SSL Issuer: {{ data.ssl_issuer }}</li>
+        <li class="list-group-item">Whois Domain: {{ data.whois }}</li>
+        <li class="list-group-item">Headers:
+          <ul>
+            {% for k, v in data.headers.items() %}
+              <li>{{ k }}: {{ v }}</li>
+            {% endfor %}
+          </ul>
+        </li>
+      </ul>
+    {% endif %}
+  {% endif %}
+</body>
+</html>
